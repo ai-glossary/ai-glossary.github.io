@@ -3,33 +3,281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gradio UI Embed</title>
-    <!-- Include the Gradio JavaScript module -->
-    <script
-        type="module"
-        src="https://gradio.s3-us-west-2.amazonaws.com/5.1.0/gradio.js"
-    ></script>
+    <title>Sentiment Analysis Tool</title>
+    
+    <!-- Google Fonts for Modern Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon (Optional) -->
+    <link rel="icon" href="https://yourdomain.com/favicon.ico" type="image/x-icon">
+    
+    <!-- Gradio JavaScript Module -->
+    <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/5.1.0/gradio.js"></script>
+    
     <style>
-        /* Optional: Add some basic styling to center the Gradio app */
+        /* Reset some default browser styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Apply Google Font */
         body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #d4d4d4;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            height: 60vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
+            position: relative;
+            color: #fff;
+            text-align: center;
         }
-        gradio-app {
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 800px; /* Adjust the max width as needed */
-            height: 600px;     /* Adjust the height as needed */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 1rem;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.5s;
+        }
+
+        .hero-content .cta-button {
+            padding: 0.75rem 1.5rem;
+            background-color: #ff9800;
+            border: none;
+            border-radius: 25px;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            animation: fadeInUp 1s ease-out 1s;
+        }
+
+        .hero-content .cta-button:hover {
+            background-color: #e68900;
+        }
+
+        /* Main Content */
+        .container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gradio-wrapper {
             background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gradio-wrapper:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 1.5rem 2rem;
+            text-align: center;
+        }
+
+        footer a {
+            color: #ff9800;
+            text-decoration: none;
+            margin: 0 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #ffa040;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            nav ul {
+                display: none; /* For simplicity, hide nav links on small screens */
+            }
+
+            nav .menu-toggle {
+                display: block;
+                cursor: pointer;
+            }
+        }
+
+        /* Optional: Menu Toggle for Mobile */
+        .menu-toggle {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <!-- Embed the Gradio app -->
-    <gradio-app src="https://quocviethere-sentiment-analysis.hf.space"></gradio-app>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo">Sentiment Analyzer</div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <!-- Optional: Menu Toggle for Mobile -->
+        <div class="menu-toggle">
+            <span>&#9776;</span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Analyze Sentiments Instantly</h1>
+            <p>Leverage our powerful sentiment analysis tool to understand your text data better.</p>
+            <button class="cta-button" onclick="scrollToApp()">Get Started</button>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <section id="features">
+            <h2>Why Choose Our Tool?</h2>
+            <p>Our sentiment analysis tool offers accurate and real-time analysis to help you make informed decisions.</p>
+            <!-- You can add more feature descriptions or icons here -->
+        </section>
+
+        <!-- Embedded Gradio App -->
+        <section id="app">
+            <h2>Try It Out</h2>
+            <div class="gradio-wrapper">
+                <gradio-app src="https://quocviethere-sentiment-analysis.hf.space"></gradio-app>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Sentiment Analyzer. All rights reserved.</p>
+        <p>
+            <a href="#">Privacy Policy</a> | 
+            <a href="#">Terms of Service</a> | 
+            <a href="#">Contact Us</a>
+        </p>
+    </footer>
+
+    <!-- Additional JavaScript for Smooth Scrolling (Optional) -->
+    <script>
+        function scrollToApp() {
+            document.getElementById('app').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Optional: Mobile Menu Toggle Script
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('nav ul');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    </script>
 </body>
 </html>
