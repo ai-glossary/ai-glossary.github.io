@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradio UI Embed</title>
+    <!-- Include the Gradio JavaScript module -->
+    <script
+        type="module"
+        src="https://gradio.s3-us-west-2.amazonaws.com/5.1.0/gradio.js"
+    ></script>
+    <style>
+        /* Optional: Add some basic styling to center the Gradio app */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        gradio-app {
+            width: 100%;
+            max-width: 800px; /* Adjust the max width as needed */
+            height: 600px;     /* Adjust the height as needed */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Embed the Gradio app -->
+    <gradio-app src="https://quocviethere-sentiment-analysis.hf.space"></gradio-app>
+</body>
+</html>
